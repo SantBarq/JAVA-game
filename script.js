@@ -20,6 +20,7 @@ function drawGameCanvas () {
         context = canvas.getContext('2d');
     }
     gameLoop = setInterval(draw,16);
+    window.addEventListener('keydown', keyStroke, true);
 }
 
 drawGameCanvas();
@@ -27,7 +28,7 @@ drawGameCanvas();
 function draw() {
     context.clearRect(0, 0, boardX, boardY);
 
-    context.fillstyle = 'thistle';
+    context.fillstyle = 'green';
     context.beginPath();
     context.rect(0, 0, boardX, boardY);
     context.closePath();
@@ -39,7 +40,7 @@ function draw() {
     context.closePath();
     context.fill();
 
-    context.fillStyle = 'navy';
+    context.fillStyle = 'black';
     context.beginPath();
     context.rect(paddleX, paddleD, paddleW, paddleH)
     context.closePath();
@@ -54,10 +55,35 @@ function draw() {
 
     if (ballY + ballDY < 15) {
         ballDY = -ballDY;
-
     } else if (ballY + ballDY > boardY - 15) {
         if (ballX > paddleX && ballX < paddleX + paddleW){
-            ballDX = -ballDX;
+            ballDY = -ballDY;
+        } else {
+            clearInterval(gameLoop);
+            alert ('Game Over!');
         }
+    }
+}
+
+function keyStroke(event) {
+    if (event.keyCode == 37) {
+
+    } else if (event.keyCode == 39){
+
+    }
+    switch(event.keyCode) {
+        case 37:
+           paddleX -= 20;
+           if (paddleX < 0) {
+               paddleX = 0;
+           }
+         break;
+        case 39:
+            paddleX += 20 ;
+            if (paddleX > boardX - paddleW) {
+                paddleX = boardX - paddleW;
+            }
+            break;
+
     }
 }
